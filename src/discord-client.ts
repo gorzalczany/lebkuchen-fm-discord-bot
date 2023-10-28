@@ -22,6 +22,7 @@ class DiscordClient {
     this.commandList = [inviteToVoiceChannel];
     // TODO: Registering Commands
     // could be done as a part of deploy process
+    // https://discord.com/developers/docs/interactions/application-commands#registering-a-command
     //
     //      import { REST } from "@discordjs/rest";
     //      import { Routes } from "discord-api-types/v9";

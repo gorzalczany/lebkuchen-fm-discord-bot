@@ -1,0 +1,42 @@
+{
+  "name": "lebkuchen-fm-discord-bot",
+  "private": true,
+  "version": "0.1.0",
+  "description": "discord bot with voice functionalities for lebkuchen-fm app",
+  "author": "gorzalczanym",
+  "license": "MIT",
+  "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
+  "module": "src/main.ts",
+  "scripts": {
+    "start": "node build/main.js",
+    "build": "babel src -d build --extensions '.ts,.js' --copy-files --source-maps"
+  },
+  "dependencies": {
+    "@discordjs/voice": "^0.16.0",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "ffmpeg-static": "^5.2.0",
+    "libsodium-wrappers": "^0.7.13",
+    "socket.io-client": "4.5.2",
+    "typedi": "^0.10.0",
+    "reflect-metadata": "0.1.13"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.17.10",
+    "@babel/core": "7.18.0",
+    "@babel/plugin-proposal-decorators": "7.17.12",
+    "@babel/preset-env": "7.18.0",
+    "@babel/preset-typescript": "7.17.12",
+    "@deseteral/eslint-config": "6.0.1",
+    "@types/glob": "7.2.0",
+    "@types/jest": "27.5.1",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "babel-plugin-transform-typescript-metadata": "0.3.2",
+    "eslint": "8.15.0",
+    "jest": "28.1.0",
+    "typescript": "4.6.4"
+  }
+}

@@ -26,11 +26,9 @@ async function main(): Promise<void> {
   const unauthorizedSocket = io(socketAddress);
   unauthorizedSocket.on('connect', () => console.log('Connected to unauthorized namespace'));
   unauthorizedSocket.on('message', (eventData: EventData) => {
-    console.log('message');
     switch (eventData.id) {
       case 'PlayXSoundEvent':
-        // TODO: add dicordClient.playSound(...) method
-        console.log(`requested sound ${eventData.soundUrl}`);
+        discordClient.playAudioResource(eventData);
         break;
 
       case 'SayEvent':

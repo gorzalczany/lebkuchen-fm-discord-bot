@@ -1,6 +1,8 @@
-import { VoiceConnectionStatus, createAudioPlayer, createAudioResource, joinVoiceChannel } from '@discordjs/voice';
+import { VoiceConnectionStatus, joinVoiceChannel } from '@discordjs/voice';
 import { ChannelType, SlashCommandBuilder } from 'discord.js';
 import { CommandProtocol } from 'interfaces/Command';
+import { Container } from 'typedi';
+import { DiscordClient } from '../discord-client';
 
 export const inviteToVoiceChannel: CommandProtocol = {
   data: new SlashCommandBuilder()
@@ -27,11 +29,9 @@ export const inviteToVoiceChannel: CommandProtocol = {
       });
 
       connection.on(VoiceConnectionStatus.Ready, () => {
-        const player = createAudioPlayer();
-        connection.subscribe(player);
-
-        const resource = createAudioResource('https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg');
-        player.play(resource);
+        const discordClient = Container.get(DiscordClient);
+        connection.subscribe(discordClient.player);
+        interaction.editReply({ content: 'Posapmy...' });
       });
     } else {
       interaction.editReply({ content: 'VoiceChannel connection error' });

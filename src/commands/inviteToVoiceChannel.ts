@@ -2,7 +2,7 @@ import { VoiceConnectionStatus, joinVoiceChannel } from '@discordjs/voice';
 import { ChannelType, ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { CommandProtocol } from 'interfaces/Command';
 import { Container } from 'typedi';
-import { DiscordClient } from '../discord-client';
+import { DiscordClient } from '../discordClient';
 
 const commandName = 'wheeze_with_us'; // <------------- think about nice name for slash command
 const channelOptionName = 'channel';

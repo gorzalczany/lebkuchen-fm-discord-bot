@@ -4,7 +4,7 @@ import 'reflect-metadata';
 import { config as configDotenv } from 'dotenv';
 import io from 'socket.io-client';
 import Container from 'typedi';
-import { DiscordClient } from './discord-client';
+import { DiscordClient } from './discordClient';
 import { EventData } from './events';
 import { Configuration } from './configuration';
 

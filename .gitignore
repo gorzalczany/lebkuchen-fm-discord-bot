@@ -1,11 +1,14 @@
-node_modules/
 build/
-downloads/
+coverage/
 dist/
+downloads/
+node_modules/
+
 .cache/
 .parcel-cache/
-coverage/
+.vscode/
 
+.DS_Store
 .env
 *.log
-.DS_Store
+

@@ -33,20 +33,26 @@ class DiscordClient {
     this.commandList = [inviteToVoiceChannel];
 
     const onReady: (bot: Client) => Promise<void> = async (bot: Client) => {
-      const rest = new REST({ version: '9' }).setToken(this.configuration.DISCORD_TOKEN!!);
-      const commandData = this.commandList.map((command) => command.data.toJSON());
-      await rest.put( // TODO: find the easy (easier) way to register commands?
-        Routes.applicationGuildCommands(
-          bot.user?.id || 'missing',
-          this.configuration.DISCORD_GUILD_ID || 'missing',
-        ),
-        { body: commandData },
-      );
+      await this.registerCommands(this.commandList, bot);
       console.log('bot ready');
     };
 
-    this.client.on(Events.ClientReady, (client) => onReady(client));
+    this.client.once(Events.ClientReady, (client) => onReady(client));
     this.client.on(Events.InteractionCreate, (interaction) => this.onInteraction(interaction));
+  }
+
+  private async registerCommands(commands: CommandProtocol[], bot: Client): Promise<void> {
+    if (!bot.user?.id || !bot.guilds || !this.configuration.DISCORD_TOKEN || !this.configuration.DISCORD_GUILD_ID) { return; }
+    const commandData = commands.map((command) => command.data.toJSON());
+    const rest = new REST().setToken(this.configuration.DISCORD_TOKEN);
+
+    await rest.put(
+      Routes.applicationGuildCommands(
+        bot.user?.id,
+        this.configuration.DISCORD_GUILD_ID,
+      ),
+      { body: commandData },
+    );
   }
 
   public async setUp(): Promise<void> {

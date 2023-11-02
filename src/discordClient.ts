@@ -1,5 +1,5 @@
-import { AudioPlayer, StreamType, createAudioPlayer, createAudioResource } from '@discordjs/voice';
-import { Client, Events, GatewayIntentBits, Interaction, REST, Routes } from 'discord.js';
+import { AudioPlayer, StreamType, createAudioPlayer, createAudioResource, getVoiceConnection } from '@discordjs/voice';
+import { Client, Events, GatewayIntentBits, Interaction, REST, Routes, VoiceState } from 'discord.js';
 import fs from 'fs';
 import { CommandProtocol } from 'interfaces/Command';
 import { Service } from 'typedi';
@@ -31,6 +31,7 @@ class DiscordClient {
 
     this.client.once(Events.ClientReady, (client) => this.onReady(client));
     this.client.on(Events.InteractionCreate, (interaction) => this.onInteraction(interaction));
+    this.client.on(Events.VoiceStateUpdate, (oldState, newState) => this.onVoiceStateUpdate(oldState, newState));
   }
 
   public async setUp(): Promise<void> {
@@ -68,6 +69,16 @@ class DiscordClient {
       }
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  private async onVoiceStateUpdate(oldState: VoiceState, _newState: VoiceState): Promise<void> {
+    // leave channel when none other left
+    if (!oldState.member || !oldState.channel) { return; }
+    if (oldState.channel.members.last()?.id !== this.client.user?.id) { return; }
+    if (oldState.channel.members.size <= 1) {
+      const connection = getVoiceConnection(oldState.guild.id);
+      connection?.destroy();
     }
   }
 

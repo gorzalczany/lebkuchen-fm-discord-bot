@@ -65,10 +65,11 @@ class DiscordClient {
   private async onInteraction(interaction: Interaction): Promise<void> {
     try {
       if (interaction.isCommand()) {
-        this.commandList.find((command) => interaction.commandName === command.data.name)?.run(interaction);
+        await this.commandList.find((command) => interaction.commandName === command.data.name)?.run(interaction);
       }
     } catch (err) {
       console.log(err);
+      await this.setUp();
     }
   }
 

@@ -1,0 +1,14 @@
+# If you need more help, visit the Docker compose reference guide at
+# https://docs.docker.com/compose/compose-file/
+services:
+  lebkuchen_fm_dicord_bot:
+    build:
+      context: .
+    env_file: .env
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./downloads:/usr/src/app/downloads
+    ports:
+      - 61400:61400
+

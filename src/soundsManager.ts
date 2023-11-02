@@ -7,11 +7,11 @@ import { Readable } from 'stream';
 import { finished } from 'stream/promises';
 import nodeFetch from 'node-fetch'; // TODO: fetch vs node-fetch - better solution
 import util from 'util';
-import { PlayXSoundEvent } from './events';
+import { PlayXSoundEvent } from './interfaces/events';
 
 @Service()
 class SoundsManager {
-    async getFile(from: PlayXSoundEvent): Promise<string | null> {
+  async getFile(from: PlayXSoundEvent): Promise<string | null> {
     const url = new URL(from.soundUrl);
     const originName = url.pathname.substring(url.pathname.lastIndexOf('/') + 1);
     const oggName = `${originName.substring(0, originName.lastIndexOf('.'))}.ogg`;

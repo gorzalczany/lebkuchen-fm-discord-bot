@@ -5,7 +5,7 @@ import { CommandProtocol } from 'interfaces/Command';
 import { Service } from 'typedi';
 import { inviteToVoiceChannel } from './commands/inviteToVoiceChannel';
 import { Configuration } from './configuration';
-import { PlayXSoundEvent } from './events';
+import { PlayXSoundEvent } from './interfaces/events';
 import { SoundsManager } from './soundsManager';
 
 @Service()

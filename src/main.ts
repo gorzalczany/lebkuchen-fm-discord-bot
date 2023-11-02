@@ -5,7 +5,7 @@ import { config as configDotenv } from 'dotenv';
 import io from 'socket.io-client';
 import Container from 'typedi';
 import { DiscordClient } from './discordClient';
-import { EventData } from './events';
+import { EventData } from './interfaces/events';
 import { Configuration } from './configuration';
 
 async function main(): Promise<void> {

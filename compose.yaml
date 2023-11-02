@@ -11,4 +11,5 @@ services:
       - ./downloads:/usr/src/app/downloads
     ports:
       - 61400:61400
+    restart: unless-stopped
 

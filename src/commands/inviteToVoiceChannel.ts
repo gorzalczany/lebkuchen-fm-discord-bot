@@ -39,11 +39,13 @@ export const inviteToVoiceChannel: CommandProtocol = {
       .addChannelTypes(ChannelType.GuildVoice)),
 
   run: async (interaction) => {
-    await interaction.deferReply({ ephemeral: true });
-    if (!interaction.isChatInputCommand()) {
-      await interaction.editReply('something went wrong');
-      return;
-    }
-    await joinSelectedVoiceChannel(interaction);
+    try {
+      await interaction.deferReply({ ephemeral: true });
+      if (!interaction.isChatInputCommand()) {
+        await interaction.editReply('something went wrong');
+        return;
+      }
+      await joinSelectedVoiceChannel(interaction);
+    } catch (err) { console.log('Error during interaction:', err); }
   },
 };

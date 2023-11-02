@@ -83,8 +83,9 @@ class DiscordClient {
   }
 
   private onReady: (bot: Client) => Promise<void> = async (bot: Client) => {
+    console.log('Registering Commands');
     await this.registerCommands(this.commandList, bot);
-    console.log('bot ready');
+    console.log('Bot ready');
   };
 
   private async registerCommands(commands: CommandProtocol[], bot: Client): Promise<void> {

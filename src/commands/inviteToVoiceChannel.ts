@@ -40,7 +40,6 @@ export const inviteToVoiceChannel: CommandProtocol = {
 
   run: async (interaction) => {
     try {
-      await interaction.deferReply({ ephemeral: true });
       if (!interaction.isChatInputCommand()) {
         await interaction.editReply('something went wrong');
         return;

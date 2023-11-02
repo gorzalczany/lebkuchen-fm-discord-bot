@@ -65,6 +65,7 @@ class DiscordClient {
   private async onInteraction(interaction: Interaction): Promise<void> {
     try {
       if (interaction.isCommand()) {
+        await interaction.deferReply({ ephemeral: true });
         await this.commandList.find((command) => interaction.commandName === command.data.name)?.run(interaction);
       }
     } catch (err) {

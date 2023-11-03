@@ -4,9 +4,9 @@ import 'reflect-metadata';
 import { config as configDotenv } from 'dotenv';
 import io from 'socket.io-client';
 import Container from 'typedi';
-import { DiscordClient } from './discordClient';
-import { EventData } from './interfaces/events';
 import { Configuration } from './configuration';
+import { DiscordClient } from './discord-client';
+import { EventData } from './interfaces/events';
 
 async function main(): Promise<void> {
   configDotenv();
@@ -18,23 +18,24 @@ async function main(): Promise<void> {
   await discordClient.setUp();
 
   /* Create WebSocket server */
-  const socketAddress = config.UNAUTHORIZED_SOCKET;
-  if (!socketAddress) {
-    console.log('missing unauthorized socket config');
+  if (!config.LEBKUCHEN_FM_SOCKET_ADDRESS || !config.LEBKUCHEN_FM_SOCKET_TOKEN) {
+    console.log('Missing lebkuchenFM socket configuration.');
     return;
   }
-  const unauthorizedSocket = io(socketAddress);
-  unauthorizedSocket.on('connect', () => console.log('Connected to unauthorized namespace'));
+  const unauthorizedSocket = io(config.LEBKUCHEN_FM_SOCKET_ADDRESS, {
+    extraHeaders: {
+      Authorization: `Basic ${config.LEBKUCHEN_FM_SOCKET_TOKEN}`,
+    },
+  });
+  unauthorizedSocket.on('connect', () => console.log('Connected to lebkuchenFM events stream.'));
   unauthorizedSocket.on('message', (eventData: EventData) => {
     switch (eventData.id) {
       case 'PlayXSoundEvent':
         discordClient.playAudioResource(eventData);
         break;
-
       case 'SayEvent':
-        //
+        // ...
         break;
-
       default:
         break;
     }

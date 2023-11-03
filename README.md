@@ -9,7 +9,7 @@ Application requires following environment variables (can be provided in .env fi
 - DISCORD_TOKEN=
 - DISCORD_GUILD_ID=
 - LEBKUCHEN_FM_SOCKET_ADDRESS=
-- LEBKUCHEN_FM_SOCKET_TOKEN=(check `/api/auth` [endpoint]https://github.com/Deseteral/lebkuchen-fm#rest-endpoints)
+- LEBKUCHEN_FM_SOCKET_TOKEN=(check `/api/auth` [endpoint](https://github.com/Deseteral/lebkuchen-fm#rest-endpoints))
 
 ## Development
 Start by installing dependencies:
@@ -28,4 +28,4 @@ npm run start
 ```
 
 ## License
-This project is licensed under the [MIT license](LICENSE.md).
+This project is licensed under the [MIT license](LICENSE).

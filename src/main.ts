@@ -22,19 +22,18 @@ async function main(): Promise<void> {
     console.log('Missing lebkuchenFM socket configuration.');
     return;
   }
-  const unauthorizedSocket = io(config.LEBKUCHEN_FM_SOCKET_ADDRESS, {
-    extraHeaders: {
-      Authorization: `Basic ${config.LEBKUCHEN_FM_SOCKET_TOKEN}`,
+  const playerEventsStream = io(config.LEBKUCHEN_FM_SOCKET_ADDRESS, {
+    auth: {
+      token: config.LEBKUCHEN_FM_SOCKET_TOKEN,
     },
   });
-  unauthorizedSocket.on('connect', () => console.log('Connected to lebkuchenFM events stream.'));
-  unauthorizedSocket.on('message', (eventData: EventData) => {
+  playerEventsStream.on('connect', () => console.log('Connected to lebkuchenFM events stream.'));
+  playerEventsStream.on('message', (eventData: EventData) => {
     switch (eventData.id) {
       case 'PlayXSoundEvent':
         discordClient.playAudioResource(eventData);
         break;
       case 'SayEvent':
-        // ...
         break;
       default:
         break;

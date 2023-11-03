@@ -19,11 +19,14 @@ class SoundsManager {
     const destination = resolve('./downloads', oggName);
     const fileExists = fs.existsSync(destination);
 
-    console.log(originName, ' => ', oggName, ' [', destination, ' ]');
+    if (fileExists) {
+      return destination;
+    }
 
-    if (fileExists) { return destination; }
+    const asyncUnlink = util.promisify(fs.unlink);
 
     // download
+    console.log('File not exists. Downloading...');
     const res = await nodeFetch(url);
     if (!res.body) { return null; }
     if (!fs.existsSync('downloads')) await fs.promises.mkdir('downloads');
@@ -32,8 +35,13 @@ class SoundsManager {
 
     try {
       await finished(Readable.from(res.body).pipe(fileStream));
-    } catch (err) {
-      console.log(err);
+    } catch {
+      console.log('error when downloading new sound');
+      fileStream.close((err) => {
+        if (err) { return; }
+        asyncUnlink(originFile);
+      });
+      return null;
     }
 
     // convert
@@ -50,11 +58,14 @@ class SoundsManager {
     const asyncExec = util.promisify(execFile);
     try {
       await asyncExec(ffmpegPath, args);
-    } catch (err) {
-      console.log(err);
+    } catch {
+      console.log('error when converting new sound');
+      return null;
     }
 
-    fs.unlinkSync(originFile);
+    await asyncUnlink(originFile).catch((_) => {
+      console.log('error when deleting origin file');
+    });
 
     return destination;
   }

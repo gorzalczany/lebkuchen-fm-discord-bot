@@ -1,12 +1,12 @@
 import { AudioPlayer, StreamType, createAudioPlayer, createAudioResource, getVoiceConnection } from '@discordjs/voice';
 import { Client, Events, GatewayIntentBits, Interaction, REST, Routes, VoiceState } from 'discord.js';
 import fs from 'fs';
-import { CommandProtocol } from 'interfaces/Command';
 import { Service } from 'typedi';
+import { CommandProtocol } from './interfaces/Command';
 import { inviteToVoiceChannel } from './commands/inviteToVoiceChannel';
 import { Configuration } from './configuration';
 import { PlayXSoundEvent } from './interfaces/events';
-import { SoundsManager } from './soundsManager';
+import { SoundsManager } from './sounds-manager';
 
 @Service()
 class DiscordClient {
